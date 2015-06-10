@@ -1,6 +1,6 @@
 # jQuery Cute Element
 Ce plugin jQuery vous permettra de donner du style à vos élements select, radio et checkbox.  
-Démo [ici](http://symcms.comstep.fr/backend/library/jQueryCuteElement/index.html){:target="_blank"}  
+Démo <a href="http://symcms.comstep.fr/backend/library/jQueryCuteElement/index.html" target="_blank">ici</a>    
 
 ## Utilisation
 
