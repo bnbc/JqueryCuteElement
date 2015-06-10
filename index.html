@@ -1,0 +1,134 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cute Element</title>
+    <link href='jquery.cute-element.css' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        .container {
+            margin: 0 auto;
+            width: 960px;
+            border: 1px solid #ccc;
+            padding: 0 20px 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin: 10px 0 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #333;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin: 5px 0 10px;
+        }
+    </style>
+</script>
+<body>
+    <div class="container">
+        <h1>Cute Element</h1>
+        <h2>Elément select</h2>
+        <select name="language">
+            <option value="php">PHP</option>
+            <option value="javascript">JavaScript</option>
+            <option value="qml">QML</option>
+            <option value="c#" selected="selected">C#</option>
+            <option value="css">CSS</option>
+        </select>
+        <select name="language">
+            <option value="fr" data-icon="http://wiki.famfamfam.googlecode.com/hg/images/flags/gf.png">FR</option>
+            <option value="en" data-icon="http://wiki.famfamfam.googlecode.com/hg/images/flags/gb.png">EN</option>
+            <option value="de" data-icon="http://wiki.famfamfam.googlecode.com/hg/images/flags/de.png">DE</option>
+            <option value="it" data-icon="http://wiki.famfamfam.googlecode.com/hg/images/flags/it.png">IT</option>
+            <option value="es" data-icon="http://wiki.famfamfam.googlecode.com/hg/images/flags/es.png">ES</option>
+            <option value="sv" data-icon="http://upload.wikimedia.org/wikipedia/en/archive/4/4c/20140526092805!Flag_of_Sweden.svg">SV</option>
+        </select>
+
+        <h2>Eléments radio et checkbox</h2>
+        <p>Tous les thèmes peuvent être appliqués indépendamment aux élements "radio" et "checkbox"</p>
+        <h3>Thème "Checkbox"</h3>
+        <div class="themings-js" data-theme="checkbox">
+            <input type="checkbox" value="1" name="main_test1" />
+            <label>checkbox</label>
+            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <label>checkbox checked</label>
+            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <label>checkbox disabled</label>
+            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <label>checkbox disabled checked</label>
+        </div>
+
+        <h3>Thème "Radio"</h3>
+        <div class="themings-js" data-theme="radio">
+            <input type="radio" value="1" name="main_test" />
+            <label>radio</label>
+            <input type="radio" value="2" name="main_test" checked="checked" />
+            <label>radio checked</label>
+            <input type="radio" value="3" name="main_test" disabled="disabled" />
+            <label>radio disabled</label>
+            <input type="radio" value="4" name="main_test_disabled" checked="checked" disabled="disabled" />
+            <label>radio disabled checked</label>
+        </div>
+
+        <h3>Thème "Check heavy" (character "\2714")</h3>
+        <div class="themings-js" data-theme="check-heavy">
+            <input type="checkbox" value="1" name="main_test1" />
+            <label>default</label>
+            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <label>checked</label>
+            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <label>disabled</label>
+            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <label>disabled checked</label>
+        </div>
+
+        <h3>Thème "Bullet outline" (character "\25E6")</h3>
+        <div class="themings-js" data-theme="bullet-outline">
+            <input type="checkbox" value="1" name="main_test1" />
+            <label>default</label>
+            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <label>checked</label>
+            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <label>disabled</label>
+            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <label>disabled checked</label>
+        </div>
+
+        <h3>Thème "Smiley happy face" (character "\263B")</h3>
+        <div class="themings-js" data-theme="smiley-happy-face">
+            <input type="checkbox" value="1" name="main_test1" />
+            <label>default</label>
+            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <label>checked</label>
+            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <label>disabled</label>
+            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <label>disabled checked</label>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="jquery.cute-element.js"></script>
+    <script type="text/javascript">
+        $('.themings-js').each(function(){
+            $(this).find('input').cuteElement({
+                'theme': $(this).data('theme')
+            });
+        });
+
+        $('select').cuteElement({
+            'selectWidth': '100px'
+        });
+    </script>
+</body>
+</html>
