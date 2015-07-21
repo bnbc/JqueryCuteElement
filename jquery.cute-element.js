@@ -140,7 +140,7 @@
                                 case 'radio':
                                     var name = element.attr('name');
                                     $('input[type="radio"][name="' + name + '"]').prop('checked', false).attr('checked', false).each(function(){
-                                        $(this).next('a.cute-radio').removeClass('checked');
+                                        $(this).next('a.cute-element-radio').removeClass('checked');
                                     });
                                     element.prop('checked', true).attr('checked', true);
                                     $(this).addClass('checked');
