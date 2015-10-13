@@ -33,6 +33,7 @@
         p {
             margin: 5px 0 10px;
         }
+
     </style>
 </script>
 <body>
@@ -107,6 +108,18 @@
 
         <h3>Thème "Smiley happy face" (character "\263B")</h3>
         <div class="themings-js" data-theme="smiley-happy-face">
+            <input type="checkbox" value="1" name="main_test1" />
+            <label>default</label>
+            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <label>checked</label>
+            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <label>disabled</label>
+            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <label>disabled checked</label>
+        </div>
+
+        <h3>Thème avec une image sprite générée à partir des images dans le dossier "sprites/*"</h3>
+        <div class="themings-js" data-theme="sprites">
             <input type="checkbox" value="1" name="main_test1" />
             <label>default</label>
             <input type="checkbox" value="1" name="main_test2" checked="checked" />

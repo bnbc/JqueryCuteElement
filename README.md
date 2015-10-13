@@ -37,7 +37,7 @@ Position du label rapport à l'élément, avant ou après
 Défaut: `next`
 
 #### theme
-Thèmes pour les éléments radio et checkbox, thèmes disponibles : checkbox, radio, check-heavy, bullet-outline, smiley-happy-face, vous pouvez créer de nouveaux thème grâce à la mixin Sass décrite ci-après ou en personnalisant le css  
+Thèmes pour les éléments radio et checkbox, thèmes disponibles : checkbox, radio, check-heavy, bullet-outline, smiley-happy-face, sprites. Vous pouvez créer de nouveaux thèmes grâce aux mixins Sass décrites ci-après ou en personnalisant le css  
 Défaut: `checkbox`
 
 #### selectWidth
@@ -46,7 +46,7 @@ Défaut: `auto`
 
 
 ## Utilisation avancée avec Sass
-Plutôt que d'importer le fichier CSS vous pouvez inclure le fichier `jquery.cute-element.scss` dans votre projet, ainsi vous aurez accès à une mixin permettant de créer des thèmes pour vos élements radio et checkbox.
+Plutôt que d'importer le fichier CSS vous pouvez inclure le fichier `jquery.cute-element.scss` dans votre projet, ainsi vous aurez accès à deux mixins : une première pour créer des thèmes pour vos élements radio et checkbox à partir de pseudo-éléments ou de caractères HTML et une deuxième à partir d'images situées dans le dossier "sprites".
 
 ```scss
 .my-custom-theme {
@@ -113,3 +113,13 @@ Défaut: `0`
 #### $character-horizontal-align
 Ajustement horizontal de la position du caractère en pixels (text-indent)  
 Défaut: `0`
+
+```scss
+.my-custom-theme-with-sprites {
+    @include cute-element-input-with-sprites($sprite: sprite-map("sprites/*.png", $layout: "horizontal"));
+}
+``` 
+### Paramètres de la mixin
+
+#### $sprite
+Un appel à la fonction sprite-map avec votre dossier qui contient les images à regrouper 

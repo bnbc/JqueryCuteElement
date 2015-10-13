@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import "compass";
 
 $default-dimension: 20px !default;
 
@@ -118,8 +119,8 @@ $default-dimension: 20px !default;
     $checked-dimension: $default-dimension/2,
     $checked-color: #1290cc,
     $checked-border-radius: 0,
-    $shadow: 0px 0px -3px -1px rgba(#000, 0.25),
-    $shadow-hover: 0px 0px -3px -1px rgba(#1290cc, 1),
+    $shadow: none,
+    $shadow-hover: black 0 0 1px,
     $border: 1px solid #ddd,
     $character: none,
     $character-size: 0,
@@ -140,13 +141,8 @@ $default-dimension: 20px !default;
     height: $dimension;
     border: $border;
 
-    -webkit-box-shadow: $shadow;
-    -moz-box-shadow: $shadow;
-    box-shadow: $shadow;
-
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
+    @include box-shadow($shadow);
+    @include border-radius($border-radius);
 
     &:before {
         display: none;
@@ -157,7 +153,6 @@ $default-dimension: 20px !default;
         height: $checked-dimension;
         margin-top: -$checked-dimension/2;
         margin-left: -$checked-dimension/2;
-
         @if($character != none){
             content: $character;
             line-height: $character-vertical-align;
@@ -183,28 +178,19 @@ $default-dimension: 20px !default;
     }
 
     &:focus, &:hover {
-        -webkit-box-shadow: $shadow-hover;
-        -moz-box-shadow: $shadow-hover;
-        box-shadow: $shadow-hover;
+        @include box-shadow($shadow-hover);
     }
 
     &.checked {
         &:before {
             display: block;
         }
-
-        &.disabled {
-            cursor: default;
-            background-color: darken($color, 10);
-        }
     }
 
     &.disabled {
         cursor: default;
         background-color: darken($color, 10);
-
         &:before {
-
             @if($character != none){
                 color: $color;
             }
@@ -212,11 +198,44 @@ $default-dimension: 20px !default;
                 background-color: $color;
             }
         }
-
+        &.checked {
+            cursor: default;
+            background-color: darken($color, 10);
+        }
         &:focus, &:hover {
-            -webkit-box-shadow: $shadow-hover;
-            -moz-box-shadow: $shadow-hover;
-            box-shadow: $shadow-hover;
+            @include box-shadow(none);
+        }
+    }
+}
+
+$default-sprite: sprite-map("sprites/*.png", $layout: "horizontal") !default;
+@mixin cute-element-input-with-sprites($sprite: $default-sprite) {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding: 0;
+    margin: 0 4px 0 0;
+    text-decoration: none;
+    @include sprite-dimensions($sprite, 'A-input');
+    background: $sprite;
+    background-position: sprite-position($sprite, 'A-input');
+    &:focus, &:hover {
+        background-position: sprite-position($sprite, 'B-input-focus');
+    }
+    &.checked {
+        background-position: sprite-position($sprite, 'C-input-checked');
+        &:focus, &:hover {
+            background-position: sprite-position($sprite, 'D-input-checked-focus');
+        }
+    }
+    &.disabled {
+        cursor: default;
+        background-position: sprite-position($sprite, 'E-input-disabled');
+        &:focus, &:hover {
+            background-position: sprite-position($sprite, 'E-input-disabled');
+        }
+        &.checked {
+            background-position: sprite-position($sprite, 'F-input-checked-disabled');
         }
     }
 }
@@ -263,4 +282,8 @@ $default-dimension: 20px !default;
         $character-horizontal-align: -13px,
         $checked-color: #E07E16
     );
+}
+
+.cute-element-input-theme-sprites {
+    @include cute-element-input-with-sprites;
 }
