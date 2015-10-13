@@ -23,7 +23,6 @@ Importer le fichier dans votre page HTML après le script jQuery
     $('input[type="radio"], input[type="checkbox"]').cuteElement({
         'theme': 'check-heavy'
     });
-
     $('select').cuteElement({
         'selectWidth': '100px'
     });
@@ -122,4 +121,4 @@ Défaut: `0`
 ### Paramètres de la mixin
 
 #### $sprite
-Un appel à la fonction sprite-map avec votre dossier qui contient les images à regrouper 
+Appel à la fonction sprite-map() avec votre dossier qui contient les images à regrouper, le plus simple étant de modifier les images existantes et de regénérer la sprite avec votre compilateur sass.
