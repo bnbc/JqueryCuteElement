@@ -84,6 +84,12 @@ $default-dimension: 20px !default;
                 background-repeat: no-repeat;
                 padding-left: 28px;
             }
+
+            &.cute-element-select-option-disabled {
+                background-color: #ddd;
+                color: #333;
+                cursor: not-allowed;
+            }
         }
         &:last-child {
             a {

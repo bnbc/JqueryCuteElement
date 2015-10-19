@@ -34,6 +34,20 @@
             margin: 5px 0 10px;
         }
 
+        .button {
+            padding: 5px 10px;
+            background-color: #1290CC;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            line-height: 1;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
     </style>
 </script>
 <body>
@@ -129,10 +143,15 @@
             <input type="checkbox" value="sprites4" name="sprites4" checked="checked" disabled="disabled" />
             <label>disabled checked</label>
         </div>
-        <!--
-        <h2>Méthodes</h2>
-        <a href="#" id="check-all">Cliquez-ici pour cocher toutes les checkbox et radio</a>
-        -->
+        <h2>Méthode</h2>
+        <h3>toggleCheck</h3>
+        <a href="#" id="check-all" class="button">Cliquez-ici pour cocher/décocher toutes les checkbox</a>
+        <div class="themings-js check-all" data-theme="checkbox">
+            <input type="checkbox" name="check1" />
+            <input type="checkbox" name="check2" />
+            <input type="checkbox" name="check3" />
+            <input type="checkbox" name="check4" />
+        </div>
     </div>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="jquery.cute-element.js"></script>
@@ -140,18 +159,16 @@
     <script type="text/javascript">
         $('.themings-js').each(function(){
             $(this).find('input').cuteElement({
-                'theme': $(this).data('theme')
+                theme: $(this).data('theme'),
             });
         });
-
         $('select').cuteElement({
             'selectWidth': '100px'
         });
-        /*
         $('#check-all').click(function(event){
             event.preventDefault();
-            $('input').cuteElement('toggleCheck');
-        });*/
+            $('.check-all').find('input').cuteElement('toggleCheck');
+        });
     </script>
 </body>
 </html>

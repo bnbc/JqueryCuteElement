@@ -43,6 +43,13 @@ Défaut: `checkbox`
 Largeur de l'élément select  
 Défaut: `auto`
 
+#### inputContainer
+Ajouter un élement pour contenir les checkbox ou radio : `<div/>`, `<li/>`, ...
+Défaut: `null`
+
+#### showElement
+Rendre visible l'élément original  
+Défaut: `false` 
 
 ## Utilisation avancée avec Sass
 Plutôt que d'importer le fichier CSS vous pouvez inclure le fichier `jquery.cute-element.scss` dans votre projet, ainsi vous aurez accès à deux mixins : une première pour créer des thèmes pour vos élements radio et checkbox à partir de pseudo-éléments ou de caractères HTML et une deuxième à partir d'images situées dans le dossier "sprites".
@@ -122,3 +129,18 @@ Défaut: `0`
 
 #### $sprite
 Appel à la fonction sprite-map() avec votre dossier qui contient les images à regrouper, le plus simple étant de modifier les images existantes et de regénérer la sprite avec votre compilateur sass.
+
+## Méthode
+
+### toggleCheck
+En appelant la méthode toggleCheck sur vos checkbox préalablement modifiées vous pourrez les cocher/décocher par programmation.   
+
+```html
+<script type="text/javascript">
+    $('input[type="checkbox"]').cuteElement();
+    $('#check-all').click(function(event){
+        event.preventDefault();
+        $('input[type="checkbox"]').cuteElement('toggleCheck');
+    });  
+</script>
+``` 
