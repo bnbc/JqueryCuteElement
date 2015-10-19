@@ -1,34 +1,75 @@
-(function($) {
-    $.fn.cuteElement = function(options)
-    {
-       var defauts = {
-           labelPosition: 'next',
-           theme: 'checkbox',
-           selectWidth: 'auto',
-           inputContainer: null,
-           onClick: $.noop,
-       };
+;(function ( $, window, document, undefined ) {
 
-       var params = $.extend(defauts, options);
+    // undefined is used here as the undefined global
+    // variable in ECMAScript 3 and is mutable (i.e. it can
+    // be changed by someone else). undefined isn't really
+    // being passed in so we can ensure that its value is
+    // truly undefined. In ES5, undefined can no longer be
+    // modified.
 
-        return this.each(function()
-        {
-            var element = $(this);
-            var tag = element.prop('tagName').toLowerCase();
+    // window and document are passed through as local
+    // variables rather than as globals, because this (slightly)
+    // quickens the resolution process and can be more
+    // efficiently minified (especially when both are
+    // regularly referenced in your plugin).
+
+    // Create the defaults once
+    var pluginName = "cuteElement",
+        defaults = {
+            labelPosition: 'next',
+            theme: 'checkbox',
+            selectWidth: 'auto',
+            inputContainer: null,
+            onClick: $.noop,
+        };
+
+    // The actual plugin constructor
+    function Plugin( element, options ) {
+        this.element = element;
+
+        // jQuery has an extend method that merges the
+        // contents of two or more objects, storing the
+        // result in the first object. The first object
+        // is generally empty because we don't want to alter
+        // the default options for future instances of the plugin
+
+        // Si options est une string alors on lance la fonction correspondante
+        this.options = $.extend( {}, defaults, options) ;
+
+        this._defaults = defaults;
+        this._name = pluginName;
+
+        this.init();
+    }
+
+    Plugin.prototype = {
+
+        init: function() {
+            // Place initialization logic here
+            // You already have access to the DOM element and
+            // the options via the instance, e.g. this.element
+            // and this.options
+            // you can add more functions like the one below and
+            // call them like so: this.yourOtherFunction(this.element, this.options).
+
+            var self = this;
+            var $elt = $(this.element);
+            var tag  = $elt.prop('tagName').toLowerCase();
 
             switch(tag){
                 case 'select':
-                    var selected_option = element.find('option:selected');
+                    var selected_option = $elt.find('option:selected');
                     var icon = selected_option.data('icon');
 
-                    /* Largeur du select */
-                    var select_width = params.selectWidth;
-                    if(element.data('width')){
-                        select_width = element.data('width');
+                    // Largeur du select
+                    var select_width = self.options.selectWidth;
+                    if($elt.data('width')){
+                        select_width = $elt.data('width');
                     }
 
+                    // Construction de l'élément de substitution
                     var selected_option_text = selected_option.text() != '' ? selected_option.text() : '&nbsp;';
-                    var a = $('<a href="#" class="cute-element-select cute-element-select-theme-' + params.theme + '">' + selected_option_text + '</a>').css('width', select_width);
+                    var a = $('<a href="#" class="cute-element-select cute-element-select-theme-' + self.options.theme + '">' + selected_option_text + '</a>').css('width', select_width);
                     if(icon){
                         a.css({
                             'background-image': 'url("' + icon + '")'
@@ -36,8 +77,9 @@
                         a.addClass('cute-element-select-icon');
                     }
 
+                    // Construction de la liste déroulante
                     var ul = $('<ul class="cute-element-select-option"></ul>');
-                    element.find('option').each(function(){
+                    $elt.find('option').each(function(){
                         var icon = $(this).data('icon');
                         var text = $(this).text() != '' ? $(this).text() : '&nbsp;';
                         var a = $('<a href="#" data-value="' + $(this).attr('value') + '">' + text + '</a>');
@@ -52,34 +94,33 @@
                             a.data('icon', icon);
                         }
                     });
-
-                    element.after(a);
+                    $elt.after(a);
                     $('body').append(ul);
 
-                    /* Taille minimum de la liste */
+                    // Taille minimum de la liste
                     var max_width = 0;
                     ul.find('a').each(function(){
                         if(max_width < a.width())
                             max_width = a.width();
                     });
-
                     var padding = a.outerWidth() - a.width();
                     ul.css({
                         'min-width': max_width + padding
                     });
-                    element.hide();
+                    $elt.hide();
 
-                    /** CLic sur les options **/
-                    ul.find('a').click(function(event){
+                    // Evénement click sur les options
+                    ul.find('a').on('click', function(event){
                         event.preventDefault();
                         ul.find('a').removeClass('selected');
                         $(this).addClass('selected');
 
                         // On met le selected sur l'option correspondante
-                        if($(this).attr('data-value') === undefined)
+                        if($(this).attr('data-value') === undefined){
                             alert("No value on option");
-                        element.find('option').prop('selected', false).attr('selected', false);
-                        element.find('option[value="' + $(this).attr('data-value') + '"]').prop('selected', true).attr('selected', true);
+                        }
+                        $elt.find('option').prop('selected', false).attr('selected', false);
+                        $elt.find('option[value="' + $(this).attr('data-value') + '"]').prop('selected', true).attr('selected', true);
                         a.text($(this).text());
                         var icon = $(this).data('icon');
                         if(icon){
@@ -90,22 +131,23 @@
                         }
                         ul.toggleClass('cute-element-select-option-open');
                         a.toggleClass('cute-element-select-open');
-                        element.trigger('change');
-                    })
+                        $elt.trigger('change');
+                    });
 
-                    /** Fermeture quand on quitte la liste déroulante **/
-                    ul.mouseleave(function(){
+                    // Fermeture quand on quitte la liste déroulante
+                    ul.on('mouseleave', function(){
                         a.removeClass('cute-element-select-open');
                         $(this).removeClass('cute-element-select-option-open')
                     });
 
-                    a.click(function(event){
+                    // Evénement click
+                    a.on('click', function(event){
+                        event.preventDefault();
                         var retrn = true;
-                        if(params.onClick !== $.noop){
+                        if(self.options.onClick !== $.noop){
                             retrn = options.onClick(event, element);
                         }
                         if(retrn !== false){
-                            event.preventDefault();
                             var top = $(this).offset().top + $(this).outerHeight();
                             var left = $(this).offset().left;
                             ul.css({'top': top + 'px', 'left': left + 'px'});
@@ -115,24 +157,25 @@
                     });
                 break;
                 case 'input':
-                    var type = element.attr('type');
+                    // Type de l'élément : radio ou checkbox
+                    var type = $elt.attr('type');
 
                     // Position du label par rapport à l'input
-                    if(params.labelPosition == 'next'){
-                        var label = element.next('label');
+                    if(self.options.labelPosition == 'next'){
+                        var label = $elt.next('label');
                     }
                     else {
-                        var label = element.prev('label');
+                        var label = $elt.prev('label');
                     }
 
                     // Si la paramètre est spécifié on créé un container
                     var container = null;
-                    if(params.inputContainer !== null){
-                        container = $(params.inputContainer);
-                        element.after(container);
-                        container.append(element);
-                        container.addClass('cute-element-input-container cute-element-' + type + '-container-' + params.theme);
-                        if(params.labelPosition == 'next'){
+                    if(self.options.inputContainer !== null){
+                        container = $(self.options.inputContainer);
+                        $elt.after(container);
+                        container.append($elt);
+                        container.addClass('cute-element-input-container cute-element-' + type + '-container-' + self.options.theme);
+                        if(self.options.labelPosition == 'next'){
                             container.append(label);
                         }
                         else {
@@ -140,43 +183,53 @@
                         }
                     }
 
-                    if(label.length)
+                    // Classe sur le label
+                    if(label.length){
                         label.addClass('cute-element-input-label');
-
-                    var a = $('<a href="#" class="cute-element-' + type + ' cute-element-input-theme-' + params.theme + '"></a>');
-                    element.after(a);
-                    element.hide();
-
-                    if(element.is(':checked')){
-                        a.addClass('checked');
-                        label.addClass('checked');
-                        if(container !== null)
-                            container.addClass('checked');
                     }
 
-                    if(element.prop('disabled')){
+                    // Construction de l'élément de substitution
+                    var a = $('<a href="#" class="cute-element-' + type + ' cute-element-input-theme-' + self.options.theme + '"></a>');
+                    $elt.after(a);
+
+                    // Si l'élement est coché
+                    if($elt.is(':checked')){
+                        a.addClass('checked');
+                        label.addClass('checked');
+                        if(container !== null){
+                            container.addClass('checked');
+                        }
+                    }
+
+                    // Si l'élément est désactivé
+                    if($elt.prop('disabled')){
                         a.addClass('disabled');
                         a.click(function(event){
                             event.preventDefault();
                         });
                         label.addClass('disabled');
-                        if(container !== null)
+                        if(container !== null){
                             container.addClass('disabled');
+                        }
                     }
                     else {
-                        a.click(function(event){
-                            var retrn = true;
-                            if(params.onClick !== $.noop){
-                                retrn = options.onClick(event, element);
+                        // Evénement click sur le substitut
+                        a.on('click', function(event){
+                            event.preventDefault();
+                            var element   = $(this).prev('input');
+                            var type      = element.attr('type');
+                            var container = element.parents('.cute-element-input-container:first');
+
+                            // Fonction sur l'événement click
+                            var result = true;
+                            if(self.options.onClick !== $.noop){
+                                result = self.options.onClick(event, element);
                             }
-                            if(retrn !== false){
-                                event.preventDefault();
+                            // Si la fonction sur l'événement click retourne false on annnule le cochage
+                            if(result !== false){
                                 switch(type){
                                     case 'checkbox':
-                                        if($(this).is(':checked'))
-                                            element.prop('checked', false).attr('checked', false);
-                                        else
-                                            element.prop('checked', true).attr('checked', true);
+                                        element.prop('checked', !element.is(":checked")).trigger('click');
                                         $(this).toggleClass('checked');
                                         if(container !== null)
                                             container.toggleClass('checked');
@@ -187,21 +240,54 @@
                                             $(this).next('a.cute-element-radio').removeClass('checked');
                                             $(this).parents('.cute-element-input-container:first').removeClass('checked');
                                         });
-                                        element.prop('checked', true).attr('checked', true);
+                                        element.prop('checked', true);
                                         $(this).addClass('checked');
                                         if(container !== null)
                                             container.toggleClass('checked');
                                     break;
                                 }
                             }
+                            // On déclenche l'événement click de l'élément si il existe
+                            element.trigger('click');
                         });
-                        if(label.length)
-                            label.click(function(){
+
+                        // Si il y a un label on déclenche l'évènement click sur celui-ci aussi
+                        if(label.length){
+                            label.on('click', function(){
                                 a.trigger('click');
                             });
+                        }
                     }
                 break;
             }
+        },
+        /*
+        toggleCheck: function(){
+            var element   = $(this.element);
+            var type      = element.attr('type');
+            var container = element.parents('.cute-element-input-container:first');
+            if(type == 'checkbox'){
+                element.prop('checked', !element.is(":checked")).trigger('click');
+                $(this).toggleClass('checked');
+                if(container !== null)
+                    container.toggleClass('checked');
+            }
+        }*/
+    };
+
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, pluginName)) {
+                $.data(this, pluginName,
+                new Plugin( this, options ));
+            }
+            else {
+                if(options == 'toggleCheck')
+                    $(this).data(pluginName).toggleCheck();
+            }
         });
     };
-})(jQuery);
+
+})( jQuery, window, document );

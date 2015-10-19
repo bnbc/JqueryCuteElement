@@ -120,18 +120,23 @@
 
         <h3>Thème avec une sprite générée à partir des images dans le dossier "sprites/*"</h3>
         <div class="themings-js" data-theme="sprites">
-            <input type="checkbox" value="1" name="main_test1" />
+            <input type="checkbox" value="sprites1" name="sprites1" />
             <label>default</label>
-            <input type="checkbox" value="1" name="main_test2" checked="checked" />
+            <input type="checkbox" value="sprites2" name="sprites2" checked="checked" />
             <label>checked</label>
-            <input type="checkbox" value="2" name="main_test3" disabled="disabled" />
+            <input type="checkbox" value="sprites3" name="sprites3" disabled="disabled" />
             <label>disabled</label>
-            <input type="checkbox" value="3" name="main_test4" checked="checked" disabled="disabled" />
+            <input type="checkbox" value="sprites4" name="sprites4" checked="checked" disabled="disabled" />
             <label>disabled checked</label>
         </div>
+        <!--
+        <h2>Méthodes</h2>
+        <a href="#" id="check-all">Cliquez-ici pour cocher toutes les checkbox et radio</a>
+        -->
     </div>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="jquery.cute-element.js"></script>
+    <!--<script type="text/javascript" src="jquery.cute-element.min.js"></script>-->
     <script type="text/javascript">
         $('.themings-js').each(function(){
             $(this).find('input').cuteElement({
@@ -142,6 +147,11 @@
         $('select').cuteElement({
             'selectWidth': '100px'
         });
+        /*
+        $('#check-all').click(function(event){
+            event.preventDefault();
+            $('input').cuteElement('toggleCheck');
+        });*/
     </script>
 </body>
 </html>
