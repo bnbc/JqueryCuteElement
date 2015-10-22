@@ -44,7 +44,7 @@ Largeur de l'élément select
 Défaut: `auto`
 
 #### inputContainer
-Ajouter un élement pour contenir les checkbox ou radio : `<div/>`, `<li/>`, ...
+Ajouter un élement pour contenir les checkbox ou radio : `<div/>`, `<li/>`, ...   
 Défaut: `null`
 
 #### showElement
