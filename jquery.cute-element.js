@@ -234,8 +234,8 @@
                         }
                     }
                     else {
-                        // Evénement click sur le substitut
-                        clone.on('click', function(event){
+
+                        var clickFunction = function(event){
                             event.preventDefault();
                             // Fonction sur l'événement click
                             var result = true;
@@ -246,13 +246,26 @@
                             if(result !== false){
                                 self.toggleCheck(self.element, self.options);
                             }
-                        });
+                        }
 
-                        // Si il y a un label on déclenche l'évènement click sur celui-ci aussi
-                        if(label.length){
-                            label.on('click', function(){
-                                clone.trigger('click');
+                        // Si il y a un container on déclenche l'évènement click
+                        if(container.length){
+                            container.on('click', function(event){
+                                clickFunction(event);
                             });
+                        }
+                        else {
+                            // Evénement click sur le substitut
+                            clone.on('click', function(event){
+                                clickFunction(event);
+                            });
+
+                            // Si il y a un label on déclenche l'évènement click sur celui-ci aussi
+                            if(label.length){
+                                label.on('click', function(event){
+                                    clickFunction(event);
+                                });
+                            }
                         }
                     }
                 break;
