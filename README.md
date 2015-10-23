@@ -32,7 +32,7 @@ Importer le fichier dans votre page HTML après le script jQuery
 ## Paramètres du plugin jQuery
 
 #### labelPosition
-Position du label rapport à l'élément, avant ou après  
+Position du label rapport à l'élément, avant (`prev`), après (`next`) ou aucun (`none`)   
 Défaut: `next`
 
 #### theme

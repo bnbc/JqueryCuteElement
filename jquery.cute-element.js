@@ -183,9 +183,12 @@
                     if(self.options.labelPosition == 'prev'){
                         label = $elt.prev('label');
                     }
+                    else if(self.options.labelPosition == 'none'){
+                        label = null;
+                    }
 
                     // Infos sur le label
-                    if(label.length){
+                    if(label !== null){
                         label.addClass('cute-element-input-label');
                         label.attr('data-guid', guid);
                     }
@@ -216,7 +219,9 @@
                     // Si l'élement est coché
                     if($elt.is(':checked')){
                         clone.addClass('checked');
-                        label.addClass('checked');
+                        if(label !== null){
+                            label.addClass('checked');
+                        }
                         if(container !== null){
                             container.addClass('checked');
                         }
@@ -228,13 +233,14 @@
                         clone.click(function(event){
                             event.preventDefault();
                         });
-                        label.addClass('disabled');
+                        if(label !== null){
+                            label.addClass('disabled');
+                        }
                         if(container !== null){
                             container.addClass('disabled');
                         }
                     }
                     else {
-
                         var clickFunction = function(event){
                             event.preventDefault();
                             // Fonction sur l'événement click
@@ -247,9 +253,8 @@
                                 self.toggleCheck(self.element, self.options);
                             }
                         }
-
                         // Si il y a un container on déclenche l'évènement click
-                        if(container.length){
+                        if(container !== null){
                             container.on('click', function(event){
                                 clickFunction(event);
                             });
@@ -261,7 +266,7 @@
                             });
 
                             // Si il y a un label on déclenche l'évènement click sur celui-ci aussi
-                            if(label.length){
+                            if(label !== null){
                                 label.on('click', function(event){
                                     clickFunction(event);
                                 });
